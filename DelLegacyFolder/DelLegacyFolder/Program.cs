@@ -20,6 +20,7 @@ namespace DelLegacyFolder
 
                 List<string> olderFolder = new List<string>();
 
+                //不自行排序，使用系统自己的排序方式
                 //dirs.Sort();
 
                 int count = 0;
