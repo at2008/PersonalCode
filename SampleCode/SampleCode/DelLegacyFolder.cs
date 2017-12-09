@@ -32,8 +32,8 @@ namespace SampleCode
                         Console.WriteLine(dirs[i + 1]);
                         olderFolder.Add(dirs[i]);
                         count += 1;
-                        i += 2;
-                        continue;
+                        // 之前是 2，应该有BUG，会过滤掉一些文件夹，现改为 1
+                        i += 1;
                     }
                 }
                 Console.WriteLine("总共有 {0} 个旧文件夹，是否删除？ y--删除 n--不删除", count);
