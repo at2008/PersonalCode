@@ -26,16 +26,117 @@ namespace SampleCode
                     string[] OlderFolderName = dirs[i].Split(',');
                     string[] NewerFolderName = dirs[i + 1].Split(',');
 
-                    if ((OlderFolderName[0] == NewerFolderName[0]) && (OlderFolderName[1] != NewerFolderName[1]))
+                    if ((OlderFolderName[0] == NewerFolderName[0]) && (OlderFolderName.Length == NewerFolderName.Length))
                     {
-                        Console.WriteLine(dirs[i]);
-                        Console.WriteLine(dirs[i + 1]);
-                        olderFolder.Add(dirs[i]);
-                        count += 1;
-                        // 之前是 2，应该有BUG，会过滤掉一些文件夹，现改为 1
-                        i += 1;
+                        if (OlderFolderName.Length == 2)
+                        {
+                            if ((OlderFolderName[0] == NewerFolderName[0])
+                            && (OlderFolderName[1] != NewerFolderName[1]))
+                            {
+                                string[] olderVersion = OlderFolderName[1].Substring(OlderFolderName[1].IndexOf("=") + 1).Split('.');
+                                string[] newerVersion = NewerFolderName[1].Substring(NewerFolderName[1].IndexOf("=") + 1).Split('.');
+                                for (int x = 0; x < olderVersion.Length; x++)
+                                {
+                                    if (Int32.Parse(olderVersion[x]) < Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                    else if (Int32.Parse(olderVersion[x]) > Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i + 1]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (OlderFolderName.Length == 3)
+                        {
+                            if ((OlderFolderName[0] == NewerFolderName[0])
+                            && (OlderFolderName[1] != NewerFolderName[1])
+                            && (OlderFolderName[2] == NewerFolderName[2]))
+                            {
+                                string[] olderVersion = OlderFolderName[1].Substring(OlderFolderName[1].IndexOf("=") + 1).Split('.');
+                                string[] newerVersion = NewerFolderName[1].Substring(NewerFolderName[1].IndexOf("=") + 1).Split('.');
+                                for (int x = 0; x < olderVersion.Length; x++)
+                                {
+                                    if (Int32.Parse(olderVersion[x]) < Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                    else if (Int32.Parse(olderVersion[x]) > Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i + 1]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (OlderFolderName.Length == 4)
+                        {
+                            if ((OlderFolderName[0] == NewerFolderName[0])
+                            && (OlderFolderName[1] != NewerFolderName[1])
+                            && (OlderFolderName[2] == NewerFolderName[2])
+                            && (OlderFolderName[3] == NewerFolderName[3]))
+                            {
+                                string[] olderVersion = OlderFolderName[1].Substring(OlderFolderName[1].IndexOf("=") + 1).Split('.');
+                                string[] newerVersion = NewerFolderName[1].Substring(NewerFolderName[1].IndexOf("=") + 1).Split('.');
+                                for (int x = 0; x < olderVersion.Length; x++)
+                                {
+                                    if (Int32.Parse(olderVersion[x]) < Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                    else if (Int32.Parse(olderVersion[x]) > Int32.Parse(newerVersion[x]))
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                        Console.WriteLine(dirs[i]);
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine(dirs[i + 1]);
+                                        olderFolder.Add(dirs[i + 1]);
+                                        count += 1;
+                                        i += 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
+
+                Console.ForegroundColor = ConsoleColor.White;
                 Console.WriteLine("总共有 {0} 个旧文件夹，是否删除？ y--删除 n--不删除", count);
                 string yesDel = Console.ReadLine().Trim().ToUpper();
                 if (yesDel == "Y")
@@ -46,7 +147,6 @@ namespace SampleCode
                     }
                 }
 
-
             }
             catch (UnauthorizedAccessException UAEx)
             {
@@ -56,7 +156,6 @@ namespace SampleCode
             {
                 Console.WriteLine(PathEx.Message);
             }
-
 
             Console.WriteLine("执行完毕，按任意键退出。");
             Console.ReadKey();
