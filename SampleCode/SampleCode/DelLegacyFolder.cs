@@ -17,6 +17,7 @@ namespace SampleCode
 
                 List<string> olderFolder = new List<string>();
 
+                //测试修改 hosts 后联网速度
                 //不自行排序，使用系统自己的排序方式
                 //dirs.Sort();
 
