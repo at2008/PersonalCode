@@ -17,7 +17,7 @@ namespace DirectoryFileList
                 directory = Directory.GetCurrentDirectory();
             }
 
-            //directory = @"d:\1";
+            //directory = @"d:\YoMail";
 
             Console.WriteLine(directory);
 
@@ -28,21 +28,20 @@ namespace DirectoryFileList
 
         static void DirectoryFileList(string beginDirectory, string currentDirectory)
         {
-            int currentLevel = 0;
             int level = currentDirectory.Split('\\').Length - beginDirectory.Split('\\').Length;
 
             string formatPrefix = "|--";
 
-            while (currentLevel < level)
+            for (int currentLevel = 0; currentLevel < level; currentLevel++)
             {
                 formatPrefix += "|--";
-                currentLevel++;
             }
 
             foreach (string subdirectory in Directory.GetDirectories(currentDirectory))
             {
-                string[] currentPathName = subdirectory.Split('\\');
-                Console.WriteLine(formatPrefix + currentPathName[currentPathName.Length - 1]);
+                //string[] currentPathName = subdirectory.Split('\\');
+                //Console.WriteLine(formatPrefix + currentPathName[currentPathName.Length-1]);
+                Console.WriteLine(formatPrefix + subdirectory.Substring(subdirectory.LastIndexOf('\\')));
 
                 DirectoryFileList(beginDirectory, subdirectory);
             }
