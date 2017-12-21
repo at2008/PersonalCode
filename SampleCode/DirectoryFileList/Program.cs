@@ -17,12 +17,10 @@ namespace DirectoryFileList
                 directory = Directory.GetCurrentDirectory();
             }
 
-            //directory = @"d:\YoMail";
+            //directory = @"e:\";
 
             Console.WriteLine(directory);
-
             DirectoryFileList(directory, directory);
-
             Console.ReadKey();
         }
 
@@ -30,27 +28,37 @@ namespace DirectoryFileList
         {
             int level = currentDirectory.Split('\\').Length - beginDirectory.Split('\\').Length;
 
+            level = ((beginDirectory.Split('\\')[1] == "") && (currentDirectory.Split('\\')[1] != "")) ? level + 1 : level;
+
             string formatPrefix = "|--";
 
             for (int currentLevel = 0; currentLevel < level; currentLevel++)
             {
                 formatPrefix += "|--";
             }
-
-            foreach (string subdirectory in Directory.GetDirectories(currentDirectory))
+            try
             {
-                //string[] currentPathName = subdirectory.Split('\\');
-                //Console.WriteLine(formatPrefix + currentPathName[currentPathName.Length-1]);
-                Console.WriteLine(formatPrefix + subdirectory.Substring(subdirectory.LastIndexOf('\\')));
+                foreach (string subdirectory in Directory.GetDirectories(currentDirectory))
+                {
+                    Console.WriteLine(formatPrefix + subdirectory.Substring(subdirectory.LastIndexOf('\\')));
 
-                DirectoryFileList(beginDirectory, subdirectory);
+                    DirectoryFileList(beginDirectory, subdirectory);
+                }
+
+                foreach (string file in Directory.GetFiles(currentDirectory))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGreen;
+                    Console.WriteLine(formatPrefix + Path.GetFileName(file));
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
             }
-
-            foreach (string file in Directory.GetFiles(currentDirectory))
+            catch (UnauthorizedAccessException)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine(formatPrefix + Path.GetFileName(file));
-                Console.ForegroundColor = ConsoleColor.White;
+                System.Console.WriteLine("发现受保护文件目录，禁止访问。");
+            }
+            catch (Exception exception)
+            {
+                System.Console.WriteLine("程序运行异常:" + exception);
             }
         }
     }
