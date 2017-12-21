@@ -58,7 +58,7 @@ namespace DirectoryFileList
             }
             catch (Exception exception)
             {
-                System.Console.WriteLine("程序运行异常:" + exception);
+                System.Console.WriteLine("程序运行异常:" + exception.Message);
             }
         }
     }
