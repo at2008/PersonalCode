@@ -21,15 +21,14 @@ namespace DirectoryFileList
 
             Console.WriteLine(directory);
             DirectoryFileList(directory, directory);
+            Console.WriteLine("遍历结束。");
             Console.ReadKey();
         }
 
         static void DirectoryFileList(string beginDirectory, string currentDirectory)
         {
             int level = currentDirectory.Split('\\').Length - beginDirectory.Split('\\').Length;
-
             level = ((beginDirectory.Split('\\')[1] == "") && (currentDirectory.Split('\\')[1] != "")) ? level + 1 : level;
-
             string formatPrefix = "|--";
 
             for (int currentLevel = 0; currentLevel < level; currentLevel++)
@@ -58,7 +57,7 @@ namespace DirectoryFileList
             }
             catch (Exception exception)
             {
-                System.Console.WriteLine("程序运行异常:" + exception.Message);
+                Console.WriteLine("程序运行异常:" + exception.Message);
             }
         }
     }
